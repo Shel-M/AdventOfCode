@@ -21,7 +21,6 @@ def proc(data):
         if pair[0] in data or pair[1] in data: # Pre-check string for existance of either value pairs
             positions = [data.find(pair[0]), data.find(pair[1]), data.rfind(pair[0]), data.rfind(pair[1])] # Find located values in the string, far left and far right
             positions = list(filter(lambda i: i > -1, positions)) # Remove non-matches
-            if len(positions) == 0: continue # sanity check, if no matches are left move on
 
             # Find lowest and highest values, then save it to check against for later loops over this string
             posmin = min(positions)
