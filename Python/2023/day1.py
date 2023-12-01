@@ -19,6 +19,7 @@ def proc(data):
         ["nine", "9"], 
         ["zero", "0"]]:
         if pair[0] in data or pair[1] in data: # Pre-check string for existance of either value pairs
+            ### Honestly, I really probably should have done this in two arrays, one for left and one for right searches. 
             positions = [data.find(pair[0]), data.find(pair[1]), data.rfind(pair[0]), data.rfind(pair[1])] # Find located values in the string, far left and far right
             positions = list(filter(lambda i: i > -1, positions)) # Remove non-matches
 
