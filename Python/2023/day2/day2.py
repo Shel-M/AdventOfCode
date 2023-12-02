@@ -24,7 +24,7 @@ def proc(line):
         for k in pairs.keys(): # Go over each color
             # Check if each game is possible by getting the values matching the key in the dictionary
             if maximums.get(k) < pairs.get(k): possible = False 
-            # Determine what the minimum shown for a given color is
+            # Save the new minimum for a given color if what we're looking at an impossible quantity
             if minimums.get(k) < pairs.get(k): minimums[k] = pairs.get(k)
     if possible:
         sum_1 += int(game)
