@@ -10,6 +10,7 @@ use log::Level;
 use reqwest::header::{self, HeaderMap, HeaderValue};
 
 mod day1;
+mod day2;
 
 fn main() {
     let cli = CLI::parse();
@@ -20,6 +21,7 @@ fn main() {
         "{}",
         match cli.day {
             1 => day1::Day1::solution(cli.part),
+            2 => day2::Day2::solution(cli.part),
             _ => "Not complete, or not implemented.".to_string(),
         }
     );
