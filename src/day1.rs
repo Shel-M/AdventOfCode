@@ -1,46 +1,55 @@
-use std::fs::read_to_string;
+use log::debug;
 
-fn get_input() -> (Vec<i64>, Vec<i64>) {
-    let input = read_to_string("input/1").unwrap();
-    let input = input.lines();
-    let mut left: Vec<i64> = vec![];
-    let mut right: Vec<i64> = vec![];
+pub struct Day1;
 
-    for line in input {
-        let pair = line.split(" ");
-        let pair = pair
-            .map(|s| s.trim())
-            .filter(|s| s.len() > 0)
-            .map(|s| s.parse::<i64>().unwrap())
-            .collect::<Vec<i64>>();
+impl Day1 {
+    fn parse_input(input: Vec<String>) -> (Vec<i64>, Vec<i64>) {
+        let mut left: Vec<i64> = vec![];
+        let mut right: Vec<i64> = vec![];
 
-        left.push(pair[0]);
-        right.push(pair[1]);
+        for line in input {
+            debug!("parsing {line}...");
+            let pair = line.split(" ");
+            let pair = pair
+                .map(|s| s.trim())
+                .filter(|s| s.len() > 0)
+                .map(|s| s.parse::<i64>().unwrap())
+                .collect::<Vec<i64>>();
+
+            left.push(pair[0]);
+            right.push(pair[1]);
+        }
+        return (left, right);
     }
-    return (left, right);
 }
 
-pub fn solution1() {
-    let (mut left, mut right) = get_input();
-    left.sort();
-    right.sort();
+impl crate::Day for Day1 {
+    const DAY_NUMBER: u8 = 1;
 
-    let mut vals = vec![];
-    for i in 0..left.len() {
-        vals.push((left[i] - right[i]).abs());
+    fn part1(input: Vec<String>) -> String {
+        debug!("Parsing input...");
+        let (mut left, mut right) = Self::parse_input(input);
+        debug!("{left:#?}, {right:#?}");
+        left.sort();
+        right.sort();
+
+        let mut vals = vec![];
+        for i in 0..left.len() {
+            vals.push((left[i] - right[i]).abs());
+        }
+
+        return format!("{}", vals.iter().sum::<i64>());
     }
 
-    println!("{}", vals.iter().sum::<i64>());
-}
+    fn part2(input: Vec<String>) -> String {
+        let (left, right) = Self::parse_input(input);
 
-pub fn solution2() {
-    let (left, right) = get_input();
+        let mut similarity = 0;
+        for val in left {
+            let score_mod = right.iter().filter(|i| **i == val).count() as i64;
+            similarity += val * score_mod;
+        }
 
-    let mut similarity = 0;
-    for val in left {
-        let score_mod = right.iter().filter(|i| **i == val).count() as i64;
-        similarity += val * score_mod;
+        format!("{}", similarity)
     }
-
-    println!("{}", similarity);
 }
