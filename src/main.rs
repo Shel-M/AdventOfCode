@@ -5,9 +5,12 @@ use std::{
 };
 
 use clap::Parser;
-use log::debug;
 use log::Level;
-use reqwest::header::{self, HeaderMap, HeaderValue};
+use log::{debug, error};
+use reqwest::{
+    header::{self, HeaderMap, HeaderValue},
+    Error, StatusCode,
+};
 
 mod day1;
 mod day2;
@@ -41,7 +44,7 @@ struct CLI {
 pub trait Day {
     const DAY_NUMBER: u8;
 
-    fn get_input() -> Vec<String> {
+    fn get_input() -> Result<Vec<String>, Error> {
         let path_string = format!("./input/{}", Self::DAY_NUMBER);
         let path = Path::new(&path_string);
         let mut file = match File::open(path) {
@@ -73,6 +76,11 @@ pub trait Day {
                     .send()
                     .unwrap();
 
+                if request.status() != StatusCode::OK {
+                    error!("Unable to get input {}", request.status().as_str());
+                    return Err(request.error_for_status().expect_err("What???"));
+                }
+
                 let mut response = String::new();
                 request.read_to_string(&mut response).unwrap();
 
@@ -86,15 +94,15 @@ pub trait Day {
 
         let mut input = String::new();
         file.read_to_string(&mut input).unwrap();
-        input
+        Ok(input
             .split('\n')
             .map(|s| s.trim().to_string())
             .filter(|s| s.len() > 0)
-            .collect::<Vec<String>>()
+            .collect::<Vec<String>>())
     }
 
     fn solution(part: u8) -> String {
-        let input = Self::get_input();
+        let input = Self::get_input().unwrap();
         debug!("{input:#?}");
 
         debug!("Calling part {part}...");
