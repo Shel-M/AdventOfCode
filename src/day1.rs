@@ -13,6 +13,7 @@ fn get_input() -> (Vec<i64>, Vec<i64>) {
             .filter(|s| s.len() > 0)
             .map(|s| s.parse::<i64>().unwrap())
             .collect::<Vec<i64>>();
+
         left.push(pair[0]);
         right.push(pair[1]);
     }
@@ -27,20 +28,18 @@ pub fn solution1() {
     let mut vals = vec![];
     for i in 0..left.len() {
         vals.push((left[i] - right[i]).abs());
-        println!("{}", left[i]);
-        println!("{}", right[i]);
     }
-    println!("{vals:?}");
+
     println!("{}", vals.iter().sum::<i64>());
 }
 
 pub fn solution2() {
-    let (mut left, mut right) = get_input();
+    let (left, right) = get_input();
 
     let mut similarity = 0;
     for val in left {
-        let score_mod = right.iter().filter(|i| **i == val).count();
-        similarity += val * score_mod as i64;
+        let score_mod = right.iter().filter(|i| **i == val).count() as i64;
+        similarity += val * score_mod;
     }
 
     println!("{}", similarity);
