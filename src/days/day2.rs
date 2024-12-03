@@ -1,5 +1,3 @@
-use std::u32;
-
 use log::debug;
 
 pub struct Day2;

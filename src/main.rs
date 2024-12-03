@@ -1,5 +1,5 @@
 use std::{
-    fs::{read_to_string, File},
+    fs::{self, read_to_string, File},
     io::{Read, Write},
     path::Path,
 };
@@ -12,8 +12,8 @@ use reqwest::{
     Error, StatusCode,
 };
 
-mod day1;
-mod day2;
+mod days;
+use days::*;
 
 fn main() {
     let cli = CLI::parse();
@@ -23,8 +23,9 @@ fn main() {
     println!(
         "{}",
         match cli.day {
-            1 => day1::Day1::solution(cli.part),
-            2 => day2::Day2::solution(cli.part),
+            1 => Day1::solution(cli.part),
+            2 => Day2::solution(cli.part),
+            3 => Day3::solution(cli.part),
             _ => "Not complete, or not implemented.".to_string(),
         }
     );
@@ -50,6 +51,10 @@ pub trait Day {
         let mut file = match File::open(path) {
             Ok(f) => f,
             Err(_) => {
+                if fs::read_dir("./input").is_err() {
+                    fs::create_dir("./input").unwrap()
+                }
+
                 let mut headers = HeaderMap::new();
                 headers.append(
                     header::COOKIE,
