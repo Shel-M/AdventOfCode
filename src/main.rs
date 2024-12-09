@@ -27,6 +27,7 @@ fn main() {
             2 => Day2::solution(cli.part),
             3 => Day3::solution(cli.part),
             4 => Day4::solution(cli.part),
+            5 => Day5::solution(cli.part),
             _ => "Not complete, or not implemented.".to_string(),
         }
     );
@@ -103,7 +104,6 @@ pub trait Day {
         Ok(input
             .split('\n')
             .map(|s| s.trim().to_string())
-            .filter(|s| s.len() > 0)
             .collect::<Vec<String>>())
     }
 

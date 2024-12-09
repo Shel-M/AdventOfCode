@@ -8,6 +8,7 @@ impl Day2 {
         for line in input {
             let d = line
                 .split(" ")
+                .filter(|s| !s.is_empty())
                 .map(|s| s.parse::<i32>().expect("Could not parse to integer"))
                 .collect::<Vec<i32>>();
             out.push(d);

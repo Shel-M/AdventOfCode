@@ -8,6 +8,9 @@ impl Day1 {
         let mut right: Vec<i64> = vec![];
 
         for line in input {
+            if line.is_empty() {
+                continue;
+            }
             debug!("parsing {line}...");
             let pair = line.split(" ");
             let pair = pair
