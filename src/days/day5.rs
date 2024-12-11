@@ -176,7 +176,6 @@ impl Day for Day5 {
             debug!("final {final_print:?}");
         }
 
-        // result += prints[prints.len() / 2] as u32; // change 1 with midpoint of prints
         format!("{result}")
     }
 }
