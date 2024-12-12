@@ -30,7 +30,7 @@ fn main() {
             3 => Day3::solution(cli.part),
             4 => Day4::solution(cli.part),
             5 => Day5::solution(cli.part),
-            5 => Day6::solution(cli.part),
+            6 => Day6::solution(cli.part),
             _ => "Not complete, or not implemented.".to_string(),
         }
     );

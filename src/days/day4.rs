@@ -17,19 +17,19 @@ impl Day for Day4 {
 
             for node in line {
                 debug!("");
-                if Self::part1_recursive_check(&graph, node, &Direction::E, 0, None) {
+                if Self::part1_recursive_check(&graph, &node, &Direction::E, 0, None) {
                     debug!("found");
                     result += 1;
                 }
-                if Self::part1_recursive_check(&graph, node, &Direction::S, 0, None) {
+                if Self::part1_recursive_check(&graph, &node, &Direction::S, 0, None) {
                     debug!("found");
                     result += 1;
                 }
-                if Self::part1_recursive_check(&graph, node, &Direction::SE, 0, None) {
+                if Self::part1_recursive_check(&graph, &node, &Direction::SE, 0, None) {
                     debug!("found");
                     result += 1;
                 }
-                if Self::part1_recursive_check(&graph, node, &Direction::SW, 0, None) {
+                if Self::part1_recursive_check(&graph, &node, &Direction::SW, 0, None) {
                     debug!("found");
                     result += 1;
                 }
@@ -51,8 +51,8 @@ impl Day for Day4 {
 
                 if node.data == 'A' {
                     let mut a = vec![
-                        graph.get_next(node, &Direction::NW).unwrap_or(node),
-                        graph.get_next(node, &Direction::SE).unwrap_or(node),
+                        graph.get_next(node, &Direction::NW).unwrap_or(*node),
+                        graph.get_next(node, &Direction::SE).unwrap_or(*node),
                     ]
                     .iter()
                     .map(|n| n.data)
@@ -65,8 +65,8 @@ impl Day for Day4 {
                     }
 
                     let mut b = vec![
-                        graph.get_next(node, &Direction::SW).unwrap_or(node),
-                        graph.get_next(node, &Direction::NE).unwrap_or(node),
+                        graph.get_next(node, &Direction::SW).unwrap_or(*node),
+                        graph.get_next(node, &Direction::NE).unwrap_or(*node),
                     ]
                     .iter()
                     .map(|n| n.data)
@@ -128,7 +128,7 @@ impl Day4 {
 
             return Self::part1_recursive_check(
                 graph,
-                next_node,
+                &next_node,
                 direction,
                 char_pos + 1,
                 check_forward,
